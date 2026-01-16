@@ -1,0 +1,1 @@
+ROLES = ["Employee", "HR", "Management"]

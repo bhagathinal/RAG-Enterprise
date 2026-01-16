@@ -1,0 +1,13 @@
+# -----------------------------
+# Python version
+# Recommended: Python 3.10.x
+# -----------------------------
+
+# PDF parsing
+pypdf==4.2.0
+
+# Environment variables (future-proof)
+python-dotenv==1.0.1
+
+# Text processing
+nltk==3.8.1
