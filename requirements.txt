@@ -1,13 +1,55 @@
 # -----------------------------
-# Python version
+# Python Version
 # Recommended: Python 3.10.x
 # -----------------------------
 
-# PDF parsing
-pypdf==4.2.0
+# -----------------------------
+# PDF & Document Parsing
+# -----------------------------
+pypdf
 
-# Environment variables (future-proof)
-python-dotenv==1.0.1
+# -----------------------------
+# Environment & Configuration
+# -----------------------------
+python-dotenv
 
-# Text processing
-nltk==3.8.1
+# -----------------------------
+# Text Processing & Cleaning
+# -----------------------------
+nltk
+regex
+
+# -----------------------------
+# Chunking & Tokenization
+# -----------------------------
+tiktoken
+# -----------------------------
+# Embeddings (Industry Standard)
+# -----------------------------
+sentence-transformers
+torch
+
+# -----------------------------
+# Vector Store (Local, Production-Ready)
+# -----------------------------
+faiss-cpu
+# -----------------------------
+# Data Handling
+# -----------------------------
+numpy
+pandas
+
+# -----------------------------
+# Logging & Monitoring
+# -----------------------------
+loguru
+
+# -----------------------------
+# Progress & Developer UX
+# -----------------------------
+tqdm
+
+# -----------------------------
+# Validation & Typing (Enterprise Practice)
+# -----------------------------
+pydantic
