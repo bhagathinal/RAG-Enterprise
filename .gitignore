@@ -26,3 +26,8 @@ Thumbs.db
 # Data outputs (optional: keep raw, ignore processed)
 Data/processed/
 Data/embeddings/
+
+# Vector databases
+Data/faiss/
+*.faiss
+
