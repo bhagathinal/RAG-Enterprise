@@ -30,4 +30,4 @@ Data/embeddings/
 # Vector databases
 Data/faiss/
 *.faiss
-
+    
