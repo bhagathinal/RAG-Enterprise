@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enterprise RAG System</title>
+    <link rel = "stylesheet" href = "/static/styles.css">
+</head>
+<body>
+
+<div class = "app-container">
+    <header>
+        <h1>Enterprise RAG System</h1>
+        <P>AI-Powered answers from internal documents</P>
+    </header>
+    
+    <div class="imput-card">
+    <textarea id="question" placeholder="Ask a Question about company Policies...."></textarea>
+    <button id="askbtn">Ask</button>
+    </div>
+
+    <div id="loading" class="hidden">Analyzing documents...</div>
+
+    <div id="answer card" class="hidden">
+    <h2>Answer</h2>
+    <p id="answer"></p>
+
+    <details>
+        <summary>Sources</summary>
+        <ul id="sources"></ul>
+    </details>
+    </div>
+
+    <div id="error" class="error hidden"></div>
+</div>
+
+<script scr=""></script>
+</body>
+</html>
