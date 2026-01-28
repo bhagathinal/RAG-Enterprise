@@ -1,7 +1,7 @@
 import json
 import re
 from pathlib import Path
-from access_control.permissions import DOMAIN_ROLE_MAPPING
+from access_control.permissions_1 import DOMAIN_ROLE_MAPPING
 
 # -----------------------------
 # Paths (MATCH pdf_parsing.py)

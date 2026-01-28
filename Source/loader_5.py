@@ -3,7 +3,7 @@
 # This loader is used to read PDF files and convert
 # them into LangChain Document objects
 # --------------------------------------------------
-from langchain.document_loaders import PyPDFLoader 
+from langchain_community.document_loaders import PyPDFLoader 
 
 # --------------------------------------------------
 # Function to load documents from a given file path

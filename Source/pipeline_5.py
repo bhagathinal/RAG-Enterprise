@@ -3,7 +3,7 @@
 # Responsible for reading documents from disk
 # and converting them into LangChain Document objects
 # --------------------------------------------------
-from Source.loader import load_documents
+from Source.loader_5 import load_documents
 
 # --------------------------------------------------
 # Import vector store creation logic

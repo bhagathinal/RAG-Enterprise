@@ -10,7 +10,6 @@ from langchain.embeddings import HuggingFaceEmbeddings
 # --------------------------------------------------
 from langchain.vectorstores import FAISS
 
-
 # --------------------------------------------------
 # Function to create a vector store from documents
 # --------------------------------------------------
