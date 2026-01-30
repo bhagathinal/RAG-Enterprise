@@ -2,13 +2,13 @@
 # Import HuggingFace embeddings for text vectorization
 # These embeddings convert text into numerical vectors
 # --------------------------------------------------
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 # --------------------------------------------------
 # Import FAISS vector store
 # FAISS is used for fast similarity search over vectors
 # --------------------------------------------------
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 
 # --------------------------------------------------
 # Function to create a vector store from documents

@@ -1,93 +1,71 @@
-# --------------------------------------------------
-# Import document loader
-# Responsible for reading documents from disk
-# and converting them into LangChain Document objects
-# --------------------------------------------------
 from Source.loader_5 import load_documents
-
-# --------------------------------------------------
-# Import vector store creation logic
-# Builds embeddings and stores them in a vector database
-# --------------------------------------------------
 from Source.vector_store_5 import create_vector_store
-
-# --------------------------------------------------
-# Import LLM loader
-# Loads and configures the language model (OpenAI / local / HuggingFace)
-# --------------------------------------------------
 from Source.llm_5 import load_llm
 
-# --------------------------------------------------
-# LangChain RetrievalQA chain
-# Combines retrieval + LLM generation into one pipeline
-# --------------------------------------------------
-from langchain.chains import RetrievalQA
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 
-
-# --------------------------------------------------
-# Global variable to store the vector store in memory
-# This avoids rebuilding embeddings on every query
-# --------------------------------------------------
 VECTORSTORE = None
 
 
-# --------------------------------------------------
-# Initialize the full RAG pipeline
-# - Load documents
-# - Create vector store
-# - Cache it globally
-# --------------------------------------------------
 def initialize_pipeline():
+    """Load documents and build vector store once"""
     global VECTORSTORE
 
-    # Load documents from the Data directory
     documents = load_documents("Data")
+    print(f"📄 Documents loaded: {len(documents)}")
 
-    # Create vector store from documents
     VECTORSTORE = create_vector_store(documents)
+    print("✅ Vector store created")
 
 
-# --------------------------------------------------
-# Run the RAG pipeline for a user question
-# --------------------------------------------------
-def run_pipeline(question):
+def format_docs(docs):
+    """Convert documents into plain text for prompt"""
+    return "\n\n".join(doc.page_content for doc in docs)
+
+
+def run_pipeline(question: str):
+    """Main RAG pipeline"""
     global VECTORSTORE
 
-    # Ensure vector store is initialized
     if VECTORSTORE is None:
         initialize_pipeline()
 
-    # Load the language model
     llm = load_llm()
-
-    # Convert vector store into a retriever
-    # k=3 → retrieve top 3 most relevant chunks
     retriever = VECTORSTORE.as_retriever(search_kwargs={"k": 3})
 
-    # Build RetrievalQA chain
-    qa = RetrievalQA.from_chain_type(
-        llm=llm,
-        retriever=retriever,
-        return_source_documents=True
+    prompt = ChatPromptTemplate.from_template(
+        """
+        You are an enterprise AI assistant.
+        Answer ONLY using the context below.
+        If the answer is not found, say:
+        "Not available in company documents."
+
+        Context:
+        {context}
+
+        Question:
+        {question}
+        """
     )
 
-    # Execute the chain with the user's question
-    result = qa(question)
+    rag_chain = (
+        {
+            "context": retriever | format_docs,
+            "question": RunnablePassthrough()
+        }
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
 
-    # --------------------------------------------------
-    # Extract source metadata for transparency
-    # --------------------------------------------------
-    sources = []
-    for doc in result["source_documents"]:
-        sources.append({
-            "source": doc.metadata.get("source", "Document"),
-            "page": doc.metadata.get("page", "N/A")
-        })
+    answer = rag_chain.invoke(question)
 
-    # --------------------------------------------------
-    # Return final structured response
-    # --------------------------------------------------
+    # fetch sources separately (for UI)
+    source_docs = retriever.invoke(question)
+
     return {
-        "answer": result["result"],
-        "sources": sources
+        "answer": answer,
+        "sources": [doc.metadata for doc in source_docs]
     }

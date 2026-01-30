@@ -3,7 +3,7 @@
 # This provides a standardized interface to interact
 # with OpenAI language models inside LangChain pipelines
 # --------------------------------------------------
-from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 
 
 # --------------------------------------------------
